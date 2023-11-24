@@ -1,5 +1,6 @@
 #include "keyboard.h"
 unsigned char code key_board_table[16]="123+456-789*0.=/";
+unsigned char dep_table[8]="dc#$%&()";
 void key_delay(unsigned int times)
 {
 	unsigned int i,j;
@@ -9,6 +10,26 @@ void key_delay(unsigned int times)
 unsigned char key_getvalue()
 {
 	unsigned char sum=0;
+	
+	
+	KEY=0xff;
+	if(KEY!=0xff)
+	{
+		key_delay(20);
+		if(KEY!=0xff) switch(KEY)
+		{
+			case 0xfe:
+			{
+				while(KEY!=0xff);return dep_table[0];
+			}
+			case 0xfd:
+			{
+				while(KEY!=0xfd);return dep_table[1];
+			}
+			default:return 255;
+		}
+	}
+
 	KEY=0xf0;//ÁÐ4ÐÐ4
 	if(KEY!=0xf0){
 		key_delay(20);

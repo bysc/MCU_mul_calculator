@@ -9,5 +9,6 @@
 void welcome();
 void clearStr(unsigned char *str,unsigned char len);
 void addStr(unsigned char *str,unsigned char *index,unsigned char press);
+void delStr(unsigned char *str,unsigned char *index);
 void getAnswer(unsigned char *str,unsigned char *index);
 #endif

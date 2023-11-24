@@ -30,6 +30,22 @@ void addStr(unsigned char *str,unsigned char *index,unsigned char press)
 		lcd_writedata(press);
 	}
 }
+void delStr(unsigned char *str,unsigned char *index)
+{
+	if((*index)==-1)
+	{
+		lcd_init();
+		lcd_printstr("space null");
+		lcd_delay(1000);
+	}
+	else
+	{
+		str[*index]=0;
+		(*index)--;
+	}
+	lcd_init();
+	lcd_printstr(str);
+}
 void getAnswer(unsigned char *str,unsigned char *index)
 {
 	float x1=0,x2=0,y=0;
@@ -37,6 +53,14 @@ void getAnswer(unsigned char *str,unsigned char *index)
 	unsigned char action=0;
 	unsigned char i;
 	float power=1;//∏°µ„º”»®
+	
+	if((*index)==-1)
+	{
+			lcd_printstr("nothing to print");
+			lcd_delay(1000);
+			lcd_init();
+			return;			
+	}
 	for(i=0;i<=(*index);i++)
 	{
 		if(str[i]=='+'||str[i]=='-'||str[i]=='*'||str[i]=='/') 

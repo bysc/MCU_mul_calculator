@@ -23,8 +23,16 @@ void main()
 		}
 		else if(press=='=') 
 		{
+
 			getAnswer(str,&index);
 			end_mark=1;//结束后按任意键结束运算并初始化
+		}
+		else if(press=='d') delStr(str,&index);
+		else if(press=='c') 
+		{
+			lcd_init();
+			clearStr(str,17);
+			index=-1;
 		}
 		else addStr(str,&index,press);
 	}
