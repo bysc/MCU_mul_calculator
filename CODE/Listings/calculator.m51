@@ -1,4 +1,4 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        11/22/2023  20:04:34  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        11/24/2023  10:45:42  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
@@ -26,7 +26,9 @@ INPUT MODULES INCLUDED:
   C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
   C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CLDPTR)
   C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CLDOPTR)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CILDPTR)
   C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CSTPTR)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CSTOPTR)
   C:\KEIL_V5\C51\LIB\C51S.LIB (?C?LNEG)
   C:\KEIL_V5\C51\LIB\C51S.LIB (?C?PLDIIDATA)
   C:\KEIL_V5\C51\LIB\C51S.LIB (?C?CCASE)
@@ -42,35 +44,37 @@ LINK MAP OF MODULE:  .\Objects\calculator (CALCULATOR)
             * * * * * * *   D A T A   M E M O R Y   * * * * * * *
             REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
                     0008H     0018H                  *** GAP ***
-            BIT     0020H.0   0001H.3   UNIT         _BIT_GROUP_
-                    0021H.3   0000H.5                *** GAP ***
-            DATA    0022H     003CH     UNIT         _DATA_GROUP_
-            IDATA   005EH     0001H     UNIT         ?STACK
+            BIT     0020H.0   0001H.5   UNIT         _BIT_GROUP_
+                    0021H.5   0000H.3                *** GAP ***
+            DATA    0022H     0047H     UNIT         _DATA_GROUP_
+            IDATA   0069H     0001H     UNIT         ?STACK
 
             * * * * * * *   C O D E   M E M O R Y   * * * * * * *
             CODE    0000H     0003H     ABSOLUTE     
-            CODE    0003H     0564H     UNIT         ?C?LIB_CODE
-            CODE    0567H     046FH     UNIT         ?PR?PRINTF?PRINTF
-            CODE    09D6H     01B5H     UNIT         ?PR?MAIN?CALCULATOR
-            CODE    0B8BH     0076H     UNIT         ?PR?KEY_GETVALUE?KEYBOARD
-            CODE    0C01H     002FH     UNIT         ?PR?_LCD_DELAY?LCD1602
-            CODE    0C30H     0028H     UNIT         ?PR?WELCOME?SYSTEM
-            CODE    0C58H     0027H     UNIT         ?PR?PUTCHAR?PUTCHAR
-            CODE    0C7FH     0025H     UNIT         ?PR?_LCD_PRINTSTR?LCD1602
-            CODE    0CA4H     0020H     UNIT         ?PR?_KEY_DELAY?KEYBOARD
-            CODE    0CC4H     001CH     UNIT         ?PR?_LCD_GOTOXY?LCD1602
-BL51 BANKED LINKER/LOCATER V6.22                                                      11/22/2023  20:04:34  PAGE 2
+            CODE    0003H     05A8H     UNIT         ?C?LIB_CODE
+            CODE    05ABH     046FH     UNIT         ?PR?PRINTF?PRINTF
+            CODE    0A1AH     02DFH     UNIT         ?PR?_GETANSWER?SYSTEM
+            CODE    0CF9H     0076H     UNIT         ?PR?KEY_GETVALUE?KEYBOARD
+            CODE    0D6FH     0062H     UNIT         ?PR?MAIN?CALCULATOR
+            CODE    0DD1H     0055H     UNIT         ?PR?_ADDSTR?SYSTEM
+            CODE    0E26H     0030H     UNIT         ?CO?SYSTEM
+            CODE    0E56H     002FH     UNIT         ?PR?_LCD_DELAY?LCD1602
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/24/2023  10:45:42  PAGE 2
 
 
-            CODE    0CE0H     0014H     UNIT         ?PR?LCD_INIT?LCD1602
-            CODE    0CF4H     0010H     UNIT         ?CO?KEYBOARD
-            CODE    0D04H     000EH     UNIT         ?CO?SYSTEM
-            CODE    0D12H     000CH     UNIT         ?C_C51STARTUP
-            CODE    0D1EH     0008H     UNIT         ?PR?_LCD_WRITECMD?LCD1602
-            CODE    0D26H     0008H     UNIT         ?PR?_LCD_WRITEDATA?LCD1602
-            CODE    0D2EH     0006H     UNIT         ?CO?CALCULATOR
-            CODE    0D34H     0005H     UNIT         ?PR?LCD_TURNON?LCD1602
-            CODE    0D39H     0005H     UNIT         ?PR?LCD_TURNOFF?LCD1602
+            CODE    0E85H     0028H     UNIT         ?PR?WELCOME?SYSTEM
+            CODE    0EADH     0027H     UNIT         ?PR?PUTCHAR?PUTCHAR
+            CODE    0ED4H     0025H     UNIT         ?PR?_LCD_PRINTSTR?LCD1602
+            CODE    0EF9H     0020H     UNIT         ?PR?_KEY_DELAY?KEYBOARD
+            CODE    0F19H     0020H     UNIT         ?PR?_CLEARSTR?SYSTEM
+            CODE    0F39H     001CH     UNIT         ?PR?_LCD_GOTOXY?LCD1602
+            CODE    0F55H     0014H     UNIT         ?PR?LCD_INIT?LCD1602
+            CODE    0F69H     0010H     UNIT         ?CO?KEYBOARD
+            CODE    0F79H     000CH     UNIT         ?C_C51STARTUP
+            CODE    0F85H     0008H     UNIT         ?PR?_LCD_WRITECMD?LCD1602
+            CODE    0F8DH     0008H     UNIT         ?PR?_LCD_WRITEDATA?LCD1602
+            CODE    0F95H     0005H     UNIT         ?PR?LCD_TURNON?LCD1602
+            CODE    0F9AH     0005H     UNIT         ?PR?LCD_TURNOFF?LCD1602
 
 
 
@@ -83,16 +87,14 @@ SEGMENT                               BIT_GROUP          DATA_GROUP
 ?C_C51STARTUP                      -----    -----      -----    -----
   +--> ?PR?MAIN?CALCULATOR
 
-?PR?MAIN?CALCULATOR                0020H.0  0000H.2    0022H    0020H
+?PR?MAIN?CALCULATOR                0020H.0  0000H.1    0022H    0013H
   +--> ?PR?WELCOME?SYSTEM
   +--> ?PR?_LCD_DELAY?LCD1602
+  +--> ?PR?_CLEARSTR?SYSTEM
   +--> ?PR?KEY_GETVALUE?KEYBOARD
   +--> ?PR?LCD_INIT?LCD1602
-  +--> ?PR?_LCD_WRITEDATA?LCD1602
-  +--> ?PR?_LCD_GOTOXY?LCD1602
-  +--> ?CO?CALCULATOR
-  +--> ?PR?PRINTF?PRINTF
-  +--> ?PR?_LCD_PRINTSTR?LCD1602
+  +--> ?PR?_GETANSWER?SYSTEM
+  +--> ?PR?_ADDSTR?SYSTEM
 
 ?PR?WELCOME?SYSTEM                 -----    -----      -----    -----
   +--> ?PR?LCD_INIT?LCD1602
@@ -108,24 +110,41 @@ SEGMENT                               BIT_GROUP          DATA_GROUP
 ?PR?_LCD_WRITECMD?LCD1602          -----    -----      -----    -----
   +--> ?PR?_LCD_DELAY?LCD1602
 
-?PR?_LCD_PRINTSTR?LCD1602          -----    -----      0042H    0003H
+?PR?_LCD_PRINTSTR?LCD1602          -----    -----      004DH    0003H
   +--> ?PR?_LCD_WRITEDATA?LCD1602
 
 ?PR?_LCD_WRITEDATA?LCD1602         -----    -----      -----    -----
   +--> ?PR?_LCD_DELAY?LCD1602
 
-?PR?_LCD_GOTOXY?LCD1602            -----    -----      0042H    0001H
+?PR?_LCD_GOTOXY?LCD1602            -----    -----      004DH    0001H
   +--> ?PR?_LCD_WRITECMD?LCD1602
 
-?PR?KEY_GETVALUE?KEYBOARD          -----    -----      0042H    0001H
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/24/2023  10:45:42  PAGE 3
+
+
+?PR?_CLEARSTR?SYSTEM               -----    -----      004DH    0003H
+
+?PR?KEY_GETVALUE?KEYBOARD          -----    -----      0035H    0001H
   +--> ?PR?_KEY_DELAY?KEYBOARD
-BL51 BANKED LINKER/LOCATER V6.22                                                      11/22/2023  20:04:34  PAGE 3
-
-
   +--> ?CO?KEYBOARD
 
-?PR?PRINTF?PRINTF                  0020H.2  0001H.1    0042H    001CH
+?PR?_GETANSWER?SYSTEM              0020H.1  0000H.3    0035H    0018H
+  +--> ?PR?_LCD_GOTOXY?LCD1602
+  +--> ?CO?SYSTEM
+  +--> ?PR?_LCD_PRINTSTR?LCD1602
+  +--> ?PR?_LCD_DELAY?LCD1602
+  +--> ?PR?_CLEARSTR?SYSTEM
+  +--> ?PR?PRINTF?PRINTF
+
+?PR?PRINTF?PRINTF                  0020H.4  0001H.1    004DH    001CH
   +--> ?PR?PUTCHAR?PUTCHAR
+
+?PR?_ADDSTR?SYSTEM                 -----    -----      0035H    0007H
+  +--> ?PR?LCD_INIT?LCD1602
+  +--> ?CO?SYSTEM
+  +--> ?PR?_LCD_PRINTSTR?LCD1602
+  +--> ?PR?_LCD_DELAY?LCD1602
+  +--> ?PR?_LCD_WRITEDATA?LCD1602
 
 
 
@@ -138,119 +157,96 @@ SYMBOL TABLE OF MODULE:  .\Objects\calculator (CALCULATOR)
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:0090H         PUBLIC        P1
   D:00A0H         PUBLIC        P2
-  C:09D6H         PUBLIC        main
+  C:0D6FH         PUBLIC        main
   -------         PROC          MAIN
   -------         DO            
   D:0022H         SYMBOL        press
   D:0023H         SYMBOL        str
-  D:0033H         SYMBOL        x1
-  D:0037H         SYMBOL        x2
-  D:003BH         SYMBOL        y
-  D:003FH         SYMBOL        i
-  D:0040H         SYMBOL        j
-  B:0020H.0       SYMBOL        point1
-  B:0020H.1       SYMBOL        point2
-  D:0041H         SYMBOL        operation
+  D:0034H         SYMBOL        index
+  B:0020H.0       SYMBOL        end_mark
   -------         ENDDO         
-  C:09D6H         LINE#         6
-  C:09D6H         LINE#         7
-  C:09D6H         LINE#         14
-  C:09D9H         LINE#         15
-  C:09DCH         LINE#         16
-  C:09E3H         LINE#         17
-  C:09E3H         LINE#         19
-  C:09E3H         LINE#         20
-  C:0A1BH         LINE#         21
-  C:0A1BH         LINE#         22
-  C:0A1BH         LINE#         23
-  C:0A1BH         LINE#         24
-  C:0A1EH         LINE#         25
-  C:0A27H         LINE#         26
-  C:0A2FH         LINE#         27
-  C:0A31H         LINE#         28
-  C:0A33H         LINE#         29
-  C:0A33H         LINE#         30
-  C:0A38H         LINE#         31
-  C:0A3FH         LINE#         32
-  C:0A51H         LINE#         33
-  C:0A51H         LINE#         34
-  C:0A66H         LINE#         35
-  C:0A7BH         LINE#         36
-  C:0A90H         LINE#         37
-  C:0AADH         LINE#         38
-  C:0AB9H         LINE#         39
-BL51 BANKED LINKER/LOCATER V6.22                                                      11/22/2023  20:04:34  PAGE 4
+  C:0D6FH         LINE#         5
+  C:0D6FH         LINE#         6
+  C:0D6FH         LINE#         9
+  C:0D72H         LINE#         10
+  C:0D74H         LINE#         11
+  C:0D77H         LINE#         12
+  C:0D7EH         LINE#         13
+  C:0D89H         LINE#         14
+  C:0D89H         LINE#         16
+  C:0D89H         LINE#         17
+  C:0D8EH         LINE#         18
+  C:0D95H         LINE#         19
+  C:0D98H         LINE#         20
+  C:0D98H         LINE#         21
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/24/2023  10:45:42  PAGE 4
 
 
-  C:0AB9H         LINE#         40
-  C:0AD7H         LINE#         41
-  C:0AE0H         LINE#         42
-  C:0AE3H         LINE#         43
-  C:0AEAH         LINE#         44
-  C:0AF1H         LINE#         45
-  C:0AF8H         LINE#         46
-  C:0B03H         LINE#         47
-  C:0B03H         LINE#         48
-  C:0B08H         LINE#         49
-  C:0B4BH         LINE#         50
-  C:0B88H         LINE#         51
-  C:0B88H         LINE#         52
+  C:0D9BH         LINE#         22
+  C:0D9DH         LINE#         23
+  C:0D9FH         LINE#         24
+  C:0DA4H         LINE#         25
+  C:0DA4H         LINE#         26
+  C:0DB6H         LINE#         27
+  C:0DB8H         LINE#         28
+  C:0DBAH         LINE#         29
+  C:0DCFH         LINE#         30
   -------         ENDPROC       MAIN
   -------         ENDMOD        CALCULATOR
 
   -------         MODULE        KEYBOARD
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:00B0H         PUBLIC        P3
-  C:0B8BH         PUBLIC        key_getvalue
-  C:0CF4H         PUBLIC        key_board_table
-  C:0CA4H         PUBLIC        _key_delay
+  C:0CF9H         PUBLIC        key_getvalue
+  C:0F69H         PUBLIC        key_board_table
+  C:0EF9H         PUBLIC        _key_delay
   -------         PROC          _KEY_DELAY
   D:0006H         SYMBOL        times
   -------         DO            
   D:0004H         SYMBOL        i
   D:0002H         SYMBOL        j
   -------         ENDDO         
-  C:0CA4H         LINE#         3
-  C:0CA4H         LINE#         4
-  C:0CA4H         LINE#         6
-  C:0CAEH         LINE#         7
-  C:0CC3H         LINE#         8
+  C:0EF9H         LINE#         3
+  C:0EF9H         LINE#         4
+  C:0EF9H         LINE#         6
+  C:0F03H         LINE#         7
+  C:0F18H         LINE#         8
   -------         ENDPROC       _KEY_DELAY
   -------         PROC          KEY_GETVALUE
   -------         DO            
-  D:0042H         SYMBOL        sum
+  D:0035H         SYMBOL        sum
   -------         ENDDO         
-  C:0B8BH         LINE#         9
-  C:0B8BH         LINE#         10
-  C:0B8BH         LINE#         11
-  C:0B8EH         LINE#         12
-  C:0B91H         LINE#         13
-  C:0B97H         LINE#         14
-  C:0B9EH         LINE#         15
-  C:0BA4H         LINE#         16
-  C:0BA4H         LINE#         17
-  C:0BB7H         LINE#         18
-  C:0BB7H         LINE#         19
-  C:0BBCH         LINE#         20
-  C:0BC1H         LINE#         21
-  C:0BC6H         LINE#         22
-  C:0BC9H         LINE#         23
-  C:0BC9H         LINE#         24
-  C:0BCCH         LINE#         25
-  C:0BDEH         LINE#         26
-  C:0BDEH         LINE#         27
-BL51 BANKED LINKER/LOCATER V6.22                                                      11/22/2023  20:04:34  PAGE 5
+  C:0CF9H         LINE#         9
+  C:0CF9H         LINE#         10
+  C:0CF9H         LINE#         11
+  C:0CFCH         LINE#         12
+  C:0CFFH         LINE#         13
+  C:0D05H         LINE#         14
+  C:0D0CH         LINE#         15
+  C:0D12H         LINE#         16
+  C:0D12H         LINE#         17
+  C:0D25H         LINE#         18
+  C:0D25H         LINE#         19
+  C:0D2AH         LINE#         20
+  C:0D2FH         LINE#         21
+  C:0D34H         LINE#         22
+  C:0D37H         LINE#         23
+  C:0D37H         LINE#         24
+  C:0D3AH         LINE#         25
+  C:0D4CH         LINE#         26
+  C:0D4CH         LINE#         27
+  C:0D51H         LINE#         28
+  C:0D55H         LINE#         29
+  C:0D59H         LINE#         30
+  C:0D5FH         LINE#         31
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/24/2023  10:45:42  PAGE 5
 
 
-  C:0BE3H         LINE#         28
-  C:0BE7H         LINE#         29
-  C:0BEBH         LINE#         30
-  C:0BF1H         LINE#         31
-  C:0BF1H         LINE#         32
-  C:0BF6H         LINE#         33
-  C:0BFEH         LINE#         34
-  C:0BFEH         LINE#         35
-  C:0C00H         LINE#         36
+  C:0D5FH         LINE#         32
+  C:0D64H         LINE#         33
+  C:0D6CH         LINE#         34
+  C:0D6CH         LINE#         35
+  C:0D6EH         LINE#         36
   -------         ENDPROC       KEY_GETVALUE
   -------         ENDMOD        KEYBOARD
 
@@ -260,16 +256,16 @@ SYMBOL TABLE OF MODULE:  .\Objects\calculator (CALCULATOR)
   D:0090H         PUBLIC        P1
   D:00A0H         PUBLIC        P2
   B:00A0H.5       PUBLIC        EN
-  C:0D39H         PUBLIC        lcd_turnoff
-  C:0C7FH         PUBLIC        _lcd_printstr
+  C:0F9AH         PUBLIC        lcd_turnoff
+  C:0ED4H         PUBLIC        _lcd_printstr
   B:0090H.0       PUBLIC        RS
-  C:0C10H         PUBLIC        _lcd_delay
+  C:0E65H         PUBLIC        _lcd_delay
   B:0090H.1       PUBLIC        RW
-  C:0D34H         PUBLIC        lcd_turnon
-  C:0CC4H         PUBLIC        _lcd_gotoxy
-  C:0CE0H         PUBLIC        lcd_init
-  C:0D26H         PUBLIC        _lcd_writedata
-  C:0D1EH         PUBLIC        _lcd_writecmd
+  C:0F95H         PUBLIC        lcd_turnon
+  C:0F39H         PUBLIC        _lcd_gotoxy
+  C:0F55H         PUBLIC        lcd_init
+  C:0F8DH         PUBLIC        _lcd_writedata
+  C:0F85H         PUBLIC        _lcd_writecmd
   -------         PROC          L?0022
   -------         ENDPROC       L?0022
   -------         PROC          _LCD_DELAY
@@ -278,77 +274,77 @@ SYMBOL TABLE OF MODULE:  .\Objects\calculator (CALCULATOR)
   D:0004H         SYMBOL        i
   D:0002H         SYMBOL        j
   -------         ENDDO         
-  C:0C10H         LINE#         2
-  C:0C10H         LINE#         3
-  C:0C10H         LINE#         5
-  C:0C1AH         LINE#         6
-  C:0C2FH         LINE#         7
+  C:0E65H         LINE#         2
+  C:0E65H         LINE#         3
+  C:0E65H         LINE#         5
+  C:0E6FH         LINE#         6
+  C:0E84H         LINE#         7
   -------         ENDPROC       _LCD_DELAY
   -------         PROC          _LCD_WRITECMD
   D:0007H         SYMBOL        cmd
-  C:0D1EH         LINE#         8
-  C:0D1EH         LINE#         9
-  C:0D1EH         LINE#         10
-  C:0D20H         LINE#         11
-  C:0D20H         LINE#         12
-  C:0D20H         LINE#         13
-  C:0D20H         LINE#         14
-  C:0D20H         LINE#         15
-  C:0D20H         LINE#         16
-  C:0D23H         LINE#         17
-  C:0D25H         LINE#         18
+  C:0F85H         LINE#         8
+  C:0F85H         LINE#         9
+  C:0F85H         LINE#         10
+  C:0F87H         LINE#         11
+  C:0F87H         LINE#         12
+  C:0F87H         LINE#         13
+  C:0F87H         LINE#         14
+  C:0F87H         LINE#         15
+  C:0F87H         LINE#         16
+  C:0F8AH         LINE#         17
+  C:0F8CH         LINE#         18
   -------         ENDPROC       _LCD_WRITECMD
   -------         PROC          _LCD_WRITEDATA
-BL51 BANKED LINKER/LOCATER V6.22                                                      11/22/2023  20:04:34  PAGE 6
-
-
   D:0007H         SYMBOL        mydata
-  C:0D26H         LINE#         19
-  C:0D26H         LINE#         20
-  C:0D26H         LINE#         21
-  C:0D28H         LINE#         22
-  C:0D28H         LINE#         23
-  C:0D28H         LINE#         24
-  C:0D28H         LINE#         25
-  C:0D28H         LINE#         26
-  C:0D28H         LINE#         27
-  C:0D2BH         LINE#         28
-  C:0D2DH         LINE#         29
+  C:0F8DH         LINE#         19
+  C:0F8DH         LINE#         20
+  C:0F8DH         LINE#         21
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/24/2023  10:45:42  PAGE 6
+
+
+  C:0F8FH         LINE#         22
+  C:0F8FH         LINE#         23
+  C:0F8FH         LINE#         24
+  C:0F8FH         LINE#         25
+  C:0F8FH         LINE#         26
+  C:0F8FH         LINE#         27
+  C:0F92H         LINE#         28
+  C:0F94H         LINE#         29
   -------         ENDPROC       _LCD_WRITEDATA
   -------         PROC          _LCD_PRINTSTR
-  D:0042H         SYMBOL        str
-  C:0C7FH         LINE#         30
-  C:0C85H         LINE#         31
-  C:0C85H         LINE#         32
-  C:0C90H         LINE#         33
-  C:0CA3H         LINE#         34
+  D:004DH         SYMBOL        str
+  C:0ED4H         LINE#         30
+  C:0EDAH         LINE#         31
+  C:0EDAH         LINE#         32
+  C:0EE5H         LINE#         33
+  C:0EF8H         LINE#         34
   -------         ENDPROC       _LCD_PRINTSTR
   -------         PROC          LCD_TURNON
-  C:0D34H         LINE#         35
-  C:0D34H         LINE#         36
-  C:0D34H         LINE#         37
+  C:0F95H         LINE#         35
+  C:0F95H         LINE#         36
+  C:0F95H         LINE#         37
   -------         ENDPROC       LCD_TURNON
   -------         PROC          LCD_TURNOFF
-  C:0D39H         LINE#         39
-  C:0D39H         LINE#         40
-  C:0D39H         LINE#         41
+  C:0F9AH         LINE#         39
+  C:0F9AH         LINE#         40
+  C:0F9AH         LINE#         41
   -------         ENDPROC       LCD_TURNOFF
   -------         PROC          _LCD_GOTOXY
-  D:0042H         SYMBOL        x
+  D:004DH         SYMBOL        x
   D:0001H         SYMBOL        y
-  C:0CC4H         LINE#         43
-  C:0CC8H         LINE#         44
-  C:0CC8H         LINE#         45
-  C:0CD3H         LINE#         46
-  C:0CDFH         LINE#         47
+  C:0F39H         LINE#         43
+  C:0F3DH         LINE#         44
+  C:0F3DH         LINE#         45
+  C:0F48H         LINE#         46
+  C:0F54H         LINE#         47
   -------         ENDPROC       _LCD_GOTOXY
   -------         PROC          LCD_INIT
-  C:0CE0H         LINE#         48
-  C:0CE0H         LINE#         49
-  C:0CE0H         LINE#         50
-  C:0CE5H         LINE#         51
-  C:0CEAH         LINE#         52
-  C:0CEFH         LINE#         53
+  C:0F55H         LINE#         48
+  C:0F55H         LINE#         49
+  C:0F55H         LINE#         50
+  C:0F5AH         LINE#         51
+  C:0F5FH         LINE#         52
+  C:0F64H         LINE#         53
   -------         ENDPROC       LCD_INIT
   -------         ENDMOD        LCD1602
 
@@ -356,23 +352,136 @@ SYMBOL TABLE OF MODULE:  .\Objects\calculator (CALCULATOR)
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:0090H         PUBLIC        P1
   D:00A0H         PUBLIC        P2
-  C:0C30H         PUBLIC        welcome
+  C:0A1AH         PUBLIC        _getAnswer
+  C:0F19H         PUBLIC        _clearStr
+  C:0DD1H         PUBLIC        _addStr
+  C:0E85H         PUBLIC        welcome
   -------         PROC          WELCOME
-  C:0C30H         LINE#         2
-BL51 BANKED LINKER/LOCATER V6.22                                                      11/22/2023  20:04:34  PAGE 7
+  C:0E85H         LINE#         2
+  C:0E85H         LINE#         3
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/24/2023  10:45:42  PAGE 7
 
 
-  C:0C30H         LINE#         3
-  C:0C30H         LINE#         4
-  C:0C33H         LINE#         5
-  C:0C3CH         LINE#         6
-  C:0C43H         LINE#         7
-  C:0C4CH         LINE#         8
-  C:0C53H         LINE#         9
+  C:0E85H         LINE#         4
+  C:0E88H         LINE#         5
+  C:0E91H         LINE#         6
+  C:0E98H         LINE#         7
+  C:0EA1H         LINE#         8
+  C:0EA8H         LINE#         9
   -------         ENDPROC       WELCOME
+  -------         PROC          _CLEARSTR
+  D:004DH         SYMBOL        str
+  D:0005H         SYMBOL        len
+  -------         DO            
+  D:0007H         SYMBOL        i
+  -------         ENDDO         
+  C:0F19H         LINE#         11
+  C:0F1FH         LINE#         12
+  C:0F1FH         LINE#         14
+  C:0F38H         LINE#         15
+  -------         ENDPROC       _CLEARSTR
+  -------         PROC          _ADDSTR
+  D:0035H         SYMBOL        str
+  D:0038H         SYMBOL        index
+  D:003BH         SYMBOL        press
+  C:0DD1H         LINE#         16
+  C:0DD7H         LINE#         17
+  C:0DD7H         LINE#         18
+  C:0DE3H         LINE#         19
+  C:0DE3H         LINE#         20
+  C:0DE6H         LINE#         21
+  C:0DEFH         LINE#         22
+  C:0DF6H         LINE#         23
+  C:0DF9H         LINE#         24
+  C:0E02H         LINE#         25
+  C:0E02H         LINE#         27
+  C:0E02H         LINE#         28
+  C:0E0DH         LINE#         29
+  C:0E20H         LINE#         30
+  C:0E25H         LINE#         31
+  C:0E25H         LINE#         32
+  -------         ENDPROC       _ADDSTR
+  -------         PROC          _GETANSWER
+  D:0035H         SYMBOL        str
+  D:0038H         SYMBOL        index
+  -------         DO            
+  D:003BH         SYMBOL        x1
+  D:003FH         SYMBOL        x2
+  D:0043H         SYMBOL        y
+  B:0020H.1       SYMBOL        point1
+  B:0020H.2       SYMBOL        operation
+  B:0020H.3       SYMBOL        point2
+  D:0047H         SYMBOL        action
+  D:0048H         SYMBOL        i
+  D:0049H         SYMBOL        power
+  -------         ENDDO         
+  C:0A1AH         LINE#         33
+  C:0A20H         LINE#         34
+  C:0A20H         LINE#         35
+  C:0A39H         LINE#         36
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/24/2023  10:45:42  PAGE 8
+
+
+  C:0A3FH         LINE#         37
+  C:0A41H         LINE#         39
+  C:0A4BH         LINE#         40
+  C:0A60H         LINE#         41
+  C:0A60H         LINE#         42
+  C:0A82H         LINE#         43
+  C:0A82H         LINE#         44
+  C:0A84H         LINE#         45
+  C:0A86H         LINE#         46
+  C:0A89H         LINE#         47
+  C:0A8DH         LINE#         48
+  C:0A8DH         LINE#         49
+  C:0A94H         LINE#         50
+  C:0A96H         LINE#         51
+  C:0AA1H         LINE#         52
+  C:0AA4H         LINE#         53
+  C:0AECH         LINE#         54
+  C:0AF2H         LINE#         55
+  C:0AF2H         LINE#         56
+  C:0B0DH         LINE#         57
+  C:0B55H         LINE#         58
+  C:0B58H         LINE#         60
+  C:0B9DH         LINE#         61
+  C:0BA0H         LINE#         62
+  C:0BA0H         LINE#         63
+  C:0BBBH         LINE#         64
+  C:0C03H         LINE#         65
+  C:0C05H         LINE#         67
+  C:0C05H         LINE#         68
+  C:0C0EH         LINE#         69
+  C:0C16H         LINE#         70
+  C:0C1CH         LINE#         71
+  C:0C25H         LINE#         72
+  C:0C2CH         LINE#         73
+  C:0C2CH         LINE#         74
+  C:0C31H         LINE#         75
+  C:0C43H         LINE#         76
+  C:0C43H         LINE#         77
+  C:0C58H         LINE#         78
+  C:0C6DH         LINE#         79
+  C:0C82H         LINE#         80
+  C:0C9FH         LINE#         81
+  C:0CABH         LINE#         82
+  C:0CABH         LINE#         83
+  C:0CB6H         LINE#         84
+  C:0CD4H         LINE#         85
+  C:0CDBH         LINE#         86
+  C:0CE4H         LINE#         87
+  C:0CEFH         LINE#         88
+  C:0CF1H         LINE#         89
+  C:0CF3H         LINE#         90
+  C:0CF5H         LINE#         91
+  C:0CF8H         LINE#         92
+  -------         ENDPROC       _GETANSWER
   -------         ENDMOD        SYSTEM
 
   -------         MODULE        ?C?FPADD
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/24/2023  10:45:42  PAGE 9
+
+
   C:000AH         PUBLIC        ?C?FPADD
   C:0006H         PUBLIC        ?C?FPSUB
   -------         ENDMOD        ?C?FPADD
@@ -392,10 +501,10 @@ SYMBOL TABLE OF MODULE:  .\Objects\calculator (CALCULATOR)
   -------         ENDMOD        ?C?FCAST
 
   -------         MODULE        PRINTF
-  D:0042H         PUBLIC        ?_PRINTF?BYTE
-  D:0042H         PUBLIC        ?_SPRINTF?BYTE
-  C:05C9H         PUBLIC        _PRINTF
-  C:05C3H         PUBLIC        _SPRINTF
+  D:004DH         PUBLIC        ?_PRINTF?BYTE
+  D:004DH         PUBLIC        ?_SPRINTF?BYTE
+  C:060DH         PUBLIC        _PRINTF
+  C:0607H         PUBLIC        _SPRINTF
   -------         ENDMOD        PRINTF
 
   -------         MODULE        ?C?FPROUND
@@ -418,27 +527,35 @@ SYMBOL TABLE OF MODULE:  .\Objects\calculator (CALCULATOR)
   C:04E4H         PUBLIC        ?C?CLDOPTR
   -------         ENDMOD        ?C?CLDOPTR
 
+  -------         MODULE        ?C?CILDPTR
+  C:0511H         PUBLIC        ?C?CILDPTR
+  -------         ENDMOD        ?C?CILDPTR
+
   -------         MODULE        ?C?CSTPTR
-BL51 BANKED LINKER/LOCATER V6.22                                                      11/22/2023  20:04:34  PAGE 8
-
-
-  C:0511H         PUBLIC        ?C?CSTPTR
+  C:0533H         PUBLIC        ?C?CSTPTR
   -------         ENDMOD        ?C?CSTPTR
 
+  -------         MODULE        ?C?CSTOPTR
+  C:0545H         PUBLIC        ?C?CSTOPTR
+  -------         ENDMOD        ?C?CSTOPTR
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      11/24/2023  10:45:42  PAGE 10
+
+
   -------         MODULE        ?C?LNEG
-  C:0523H         PUBLIC        ?C?LNEG
+  C:0567H         PUBLIC        ?C?LNEG
   -------         ENDMOD        ?C?LNEG
 
   -------         MODULE        ?C?PLDIIDATA
-  C:0531H         PUBLIC        ?C?PLDIIDATA
+  C:0575H         PUBLIC        ?C?PLDIIDATA
   -------         ENDMOD        ?C?PLDIIDATA
 
   -------         MODULE        ?C?CCASE
-  C:0541H         PUBLIC        ?C?CCASE
+  C:0585H         PUBLIC        ?C?CCASE
   -------         ENDMOD        ?C?CCASE
 
   -------         MODULE        PUTCHAR
-  C:0C58H         PUBLIC        _PUTCHAR
+  C:0EADH         PUBLIC        _PUTCHAR
   -------         ENDMOD        PUTCHAR
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
@@ -447,5 +564,5 @@ SYMBOL TABLE OF MODULE:  .\Objects\calculator (CALCULATOR)
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?LCD_TURNOFF?LCD1602
 
-Program Size: data=70.3 xdata=0 code=3390
+Program Size: data=81.5 xdata=0 code=3999
 LINK/LOCATE RUN COMPLETE.  2 WARNING(S),  0 ERROR(S)

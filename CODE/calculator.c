@@ -1,53 +1,31 @@
 #include "system.h"
 #include <stdio.h>
-#incude <string.h>
 typedef unsigned char u8;
 typedef unsigned int u16;
 void main()
 {
 	unsigned char press;//按键值读取
-	unsigned char str[16];
-	float x1,x2,y;
-	unsigned char i,j;
-	bit point1;
-	bit point2;
-	unsigned char operation=0;
+	unsigned char str[17];
+	unsigned char index=-1;
+	bit end_mark=0;
 	welcome();
 	lcd_delay(500);
+	clearStr(str,17);
 	while(1)	
 		
 	{
-		switch(press=key_getvalue())
+		press=key_getvalue();
+		if(press==255) continue;
+		else if(end_mark)
 		{
-			case 255:break;
-			case '.':
-				lcd_init();
-			  x1=0;
-			  x2=0;
-			operation=0;
-			  break;
-			case '=':
-				lcd_writedata('=');
-			  lcd_gotoxy(1,0);
-				switch (operation)
-				{
-					case '+':y=x1+x2;break;
-					case '-':y=x1-x2;break;
-					case '*':y=x1*x2;break;
-					case '/':y=x1/x2;break;
-					default:y=x1;break;
-				}
-				sprintf(str,"%0.5f",y);
-				lcd_printstr(str);
-			break;
-			case '+':operation='+';lcd_writedata('+');break;
-			case '-':operation='-';lcd_writedata('-');break;
-			case '*':operation='*';lcd_writedata('*');break;
-			case '/':operation='/';lcd_writedata('/');break;
-			default:
-				lcd_writedata(press);
-				if(!operation) x1=x1*10+press-'0';
-			  else x2=x2*10+press-'0'; 
+			lcd_init();
+			end_mark=0;
 		}
+		else if(press=='=') 
+		{
+			getAnswer(str,&index);
+			end_mark=1;//结束后按任意键结束运算并初始化
+		}
+		else addStr(str,&index,press);
 	}
 }

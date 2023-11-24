@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   SYSTEM                                                                11/22/2023 18:37:05 PAGE 1   
+C51 COMPILER V9.54   SYSTEM                                                                11/24/2023 10:41:16 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE SYSTEM
@@ -18,16 +18,100 @@ line level    source
    8   1        lcd_delay(500);
    9   1        lcd_writecmd(0x01);
   10   1      }
+  11          void clearStr(unsigned char *str,unsigned char len)
+  12          {
+  13   1        unsigned char i;
+  14   1        for(i=0;i<len;i++) str[i]='\0';
+  15   1      }
+  16          void addStr(unsigned char *str,unsigned char *index,unsigned char press)
+  17          {
+  18   1        if(*index==15) 
+  19   1        {
+  20   2          lcd_init();
+  21   2          lcd_printstr("space overflower");
+  22   2          lcd_delay(1000);
+  23   2          lcd_init();
+  24   2          lcd_printstr(str);
+  25   2        }
+  26   1        else
+  27   1        {
+  28   2          (*index)++;
+  29   2          str[*index]=press;
+  30   2          lcd_writedata(press);
+  31   2        }
+  32   1      }
+  33          void getAnswer(unsigned char *str,unsigned char *index)
+  34          {
+  35   1        float x1=0,x2=0,y=0;
+  36   1        bit point1=0,operation=0,point2=0;
+  37   1        unsigned char action=0;
+  38   1        unsigned char i;
+  39   1        float power=1;//浮点加权
+  40   1        for(i=0;i<=(*index);i++)
+  41   1        {
+  42   2          if(str[i]=='+'||str[i]=='-'||str[i]=='*'||str[i]=='/') 
+  43   2          {
+  44   3            action=str[i];
+  45   3            operation=1;
+  46   3          }
+  47   2          else if(str[i]=='.')//条件运算符不能做左值？
+  48   2          {
+  49   3            if(operation==1) point2=1;
+  50   3            else point1=1;    
+  51   3            power=1;
+  52   3          }
+  53   2          else if(point1==0 && operation==0) x1=x1*10+str[i]-'0';
+  54   2          else if(point1==1 && operation==0) 
+C51 COMPILER V9.54   SYSTEM                                                                11/24/2023 10:41:16 PAGE 2   
+
+  55   2          {
+  56   3            power*=0.1;
+  57   3            x1+=(str[i]-'0')*power; 
+  58   3          }
+  59   2          //程序跑到这里运算符必定加载
+  60   2          else if(point2==0) x2=x2*10+str[i]-'0';
+  61   2          else if(point2==1) 
+  62   2          {
+  63   3            power*=0.1;
+  64   3            x2+=(str[i]-'0')*power;
+  65   3          }
+  66   2          else 
+  67   2          {
+  68   3            x1=0;
+  69   3            x2=0;
+  70   3            lcd_gotoxy(1,0);
+  71   3            lcd_printstr("unexp error");
+  72   3            lcd_delay(1000);
+  73   3          }
+  74   2        }
+  75   1        switch(action)
+  76   1        {
+  77   2          case '+': y=x1+x2;break;
+  78   2          case '-': y=x1-x2;break;
+  79   2          case '*': y=x1*x2;break;
+  80   2          case '/': y=x1/x2;break;//x2=0,y=+INF
+  81   2          default: y=x1;break;
+  82   2        }
+  83   1          clearStr(str,17);
+  84   1          sprintf(str,"%.6f",y);
+  85   1          lcd_gotoxy(1,0);
+  86   1          lcd_printstr(str);
+  87   1          (*index)=-1;
+  88   1          point1=0;
+  89   1          point2=0;
+  90   1          operation=0;
+  91   1          action=0;
+  92   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     40    ----
-   CONSTANT SIZE    =     14    ----
+   CODE SIZE        =    892    ----
+   CONSTANT SIZE    =     48    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----    ----
+   DATA SIZE        =   ----      34
    IDATA SIZE       =   ----    ----
-   BIT SIZE         =   ----    ----
+   BIT SIZE         =   ----       3
 END OF MODULE INFORMATION.
 
 
