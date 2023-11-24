@@ -26,6 +26,14 @@ unsigned char key_getvalue()
 			{
 				while(KEY!=0xfd);return dep_table[1];
 			}
+			case 0xfb:
+			{
+				while(KEY!=0xfb);return dep_table[2];
+			}
+			case 0xf7:
+			{
+				while(KEY!=0xf7);return dep_table[3];
+			}
 			default:return 255;
 		}
 	}

@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   CALCULATOR                                                            11/24/2023 22:02:54 PAGE 1   
+C51 COMPILER V9.54   CALCULATOR                                                            11/25/2023 00:07:45 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE CALCULATOR
@@ -12,51 +12,60 @@ line level    source
    2          #include <stdio.h>
    3          typedef unsigned char u8;
    4          typedef unsigned int u16;
-   5          void main()
-   6          {
-   7   1        unsigned char press;//按键值读取
-   8   1        unsigned char str[17];
-   9   1        unsigned char index=-1;
-  10   1        bit end_mark=0;
-  11   1        welcome();
-  12   1        lcd_delay(500);
-  13   1        clearStr(str,17);
-  14   1        while(1)  
-  15   1          
-  16   1        {
-  17   2          press=key_getvalue();
-  18   2          if(press==255) continue;
-  19   2          else if(end_mark)
-  20   2          {
-  21   3            lcd_init();
-  22   3            end_mark=0;
-  23   3          }
-  24   2          else if(press=='=') 
-  25   2          {
-  26   3      
-  27   3            getAnswer(str,&index);
-  28   3            end_mark=1;//结束后按任意键结束运算并初始化
-  29   3          }
-  30   2          else if(press=='d') delStr(str,&index);
-  31   2          else if(press=='c') 
-  32   2          {
-  33   3            lcd_init();
-  34   3            clearStr(str,17);
-  35   3            index=-1;
-  36   3          }
-  37   2          else addStr(str,&index,press);
-  38   2        }
-  39   1      }
+   5          bit end_mark=0;//calculator专用
+   6          void main()
+   7          {
+   8   1        unsigned char press;//按键值读取
+   9   1        unsigned char str[17];
+  10   1        unsigned char index=-1;
+  11   1        bit mode=0;//0为calculator，1为2转16进制
+  12   1      /*===================以上通用===========================*/  
+  13   1        welcome();
+  14   1        lcd_delay(500);
+  15   1        clearStr(str,17);
+  16   1        while(1)  
+  17   1          
+  18   1        {
+  19   2          press=key_getvalue();
+  20   2          if(press==255) continue;
+  21   2          //键盘扫描，模式选择,模式优先级比end_mark高
+  22   2          else if(press=='#') 
+  23   2          {
+  24   3            mode=0;
+  25   3            lcd_init();
+  26   3            lcd_printstr("calculator");
+  27   3            lcd_delay(1000);
+  28   3            lcd_init();
+  29   3            clearStr(str,17);
+  30   3            index=-1;
+  31   3            end_mark=0;
+  32   3          }
+  33   2          else if(press=='$') 
+  34   2          {
+  35   3            mode=1;
+  36   3            lcd_init();
+  37   3            lcd_printstr("bin_hex convert");
+  38   3            lcd_delay(1000);
+  39   3            lcd_init();
+  40   3            clearStr(str,17);
+  41   3            index=-1;
+  42   3          }
+  43   2          else if(mode==0) calculator(str,&index,press);
+  44   2          else binToHEX(str,&index,press);
+  45   2        }
+  46   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    147    ----
-   CONSTANT SIZE    =   ----    ----
+   CODE SIZE        =    183    ----
+   CONSTANT SIZE    =     27    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----      19
+C51 COMPILER V9.54   CALCULATOR                                                            11/25/2023 00:07:45 PAGE 2   
+
    IDATA SIZE       =   ----    ----
-   BIT SIZE         =   ----       1
+   BIT SIZE         =      1       1
 END OF MODULE INFORMATION.
 
 
