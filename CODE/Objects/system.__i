@@ -1,0 +1,1 @@
+"system.c" OPTIMIZE (8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\system.lst) TABS (2) OBJECT(.\Objects\system.obj)

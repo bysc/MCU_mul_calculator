@@ -1,0 +1,80 @@
+C51 COMPILER V9.54   LCD1602                                                               11/22/2023 18:36:51 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE LCD1602
+OBJECT MODULE PLACED IN .\Objects\lcd1602.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE lcd1602.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\l
+                    -cd1602.lst) TABS(2) OBJECT(.\Objects\lcd1602.obj)
+
+line level    source
+
+   1          #include "lcd1602.h"
+   2          void lcd_delay(unsigned int times)
+   3          {
+   4   1        unsigned int i,j;
+   5   1        for(i=0;i<times;i++)
+   6   1          for(j=0;j<112;j++);
+   7   1      }
+   8          void lcd_writecmd(unsigned char cmd)
+   9          {
+  10   1        RS=0;
+  11   1        RW=0;
+  12   1        EN=0;
+  13   1        LCD=cmd;
+  14   1        lcd_delay(2);
+  15   1        EN=1;
+  16   1        lcd_delay(2);
+  17   1        EN=0;
+  18   1      }
+  19          void lcd_writedata(unsigned char mydata)
+  20          {
+  21   1        RS=1;
+  22   1        RW=0;
+  23   1        EN=0;
+  24   1        LCD=mydata;
+  25   1        lcd_delay(2);
+  26   1        EN=1;
+  27   1        lcd_delay(2);
+  28   1        EN=0;
+  29   1      }
+  30          void lcd_printstr(unsigned char*str)
+  31          {
+  32   1        while(*str!='\0')
+  33   1          lcd_writedata(*str++);
+  34   1      }
+  35          void lcd_turnon()
+  36          {
+  37   1        lcd_writecmd(0x0c);
+  38   1      }
+  39          void lcd_turnoff()
+  40          {
+  41   1        lcd_writecmd(0x08);
+  42   1      }
+  43          void lcd_gotoxy(unsigned char x,unsigned char y)
+  44          {
+  45   1        if(x==0) lcd_writecmd(0x80+y);
+  46   1        if(x==1) lcd_writecmd(0xc0+y);
+  47   1      }
+  48          void lcd_init()
+  49          {
+  50   1        lcd_writecmd(0x38);//8位，16*2,5*7
+  51   1        lcd_writecmd(0x0c);//开启，无光标，不闪烁
+  52   1        lcd_writecmd(0x06);//光标右移，不整体移动
+  53   1        lcd_writecmd(0x01);//清屏
+  54   1      }
+C51 COMPILER V9.54   LCD1602                                                               11/22/2023 18:36:51 PAGE 2   
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    158    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

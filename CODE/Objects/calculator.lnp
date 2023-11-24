@@ -1,0 +1,6 @@
+".\Objects\calculator.obj",
+".\Objects\keyboard.obj",
+".\Objects\lcd1602.obj",
+".\Objects\system.obj" 
+TO ".\Objects\calculator" 
+PRINT(".\Listings\calculator.m51")

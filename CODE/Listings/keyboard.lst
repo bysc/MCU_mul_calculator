@@ -1,0 +1,61 @@
+C51 COMPILER V9.54   KEYBOARD                                                              11/22/2023 18:36:51 PAGE 1   
+
+
+C51 COMPILER V9.54, COMPILATION OF MODULE KEYBOARD
+OBJECT MODULE PLACED IN .\Objects\keyboard.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE keyboard.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -keyboard.lst) TABS(2) OBJECT(.\Objects\keyboard.obj)
+
+line level    source
+
+   1          #include "keyboard.h"
+   2          unsigned char code key_board_table[16]="123+456-789*0.=/";
+   3          void key_delay(unsigned int times)
+   4          {
+   5   1        unsigned int i,j;
+   6   1        for(i=0;i<times;i++)
+   7   1          for(j=0;j<112;j++);
+   8   1      }
+   9          unsigned char key_getvalue()
+  10          {
+  11   1        unsigned char sum=0;
+  12   1        KEY=0xf0;//列4行4
+  13   1        if(KEY!=0xf0){
+  14   2          key_delay(20);
+  15   2        if(KEY!=0xf0)
+  16   2        {
+  17   3          switch(KEY)//列扫描
+  18   3          {
+  19   4            case 0xe0:sum=1;break;
+  20   4            case 0xd0:sum=2;break;
+  21   4            case 0xb0:sum=3;break;
+  22   4            case 0x70:sum=4;break;
+  23   4          }
+  24   3          KEY=0x0f;
+  25   3          switch(KEY)//行扫描
+  26   3          {
+  27   4            case 0x0e:sum=sum;break;
+  28   4            case 0x0d:sum=sum+4;break;
+  29   4            case 0x0b:sum=sum+8;break;
+  30   4            case 0x07:sum=sum+12;break;     
+  31   4          }
+  32   3          while(KEY!=0x0f);
+  33   3          return key_board_table[sum-1];
+  34   3        }}
+  35   1        else return 255;
+  36   1      }
+*** WARNING C291 IN LINE 36 OF keyboard.c: not every exit path returns a value
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    150    ----
+   CONSTANT SIZE    =     16    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
