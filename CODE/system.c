@@ -154,7 +154,7 @@ void binToHEX(unsigned char *str,unsigned char *index,unsigned char press)
 {
 	unsigned int BI=0x0000;//用于存储16位二进制数
 	unsigned char HE[6]={0};//用于存储4位十六进制数，后缀H
-	unsigned char i,j,tmp;
+	char i,j,tmp;
 	if(press=='d') bh_delStr(str,index);//仅删除，不做其他操作
 	else if(press=='c')
 	{
@@ -185,6 +185,15 @@ void binToHEX(unsigned char *str,unsigned char *index,unsigned char press)
 		  str[*index]=press;
 	  }
 	}
+/*=============================================
+	=============不理解=========================
+	=========为什么index=-1就会死机================*/
+	if(*index==-1)
+	{
+		lcd_init();
+		return;
+	}
+	/*===========================================*/
 	for(i=0;i<=(*index);i++)
 	{
 		BI=(BI<<1)+str[i]-'0';

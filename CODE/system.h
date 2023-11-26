@@ -8,10 +8,10 @@
 extern bit end_mark;
 void welcome();
 void clearStr(unsigned char *str,unsigned char len);
-void addStr(unsigned char *str,unsigned char *index,unsigned char press);
-void delStr(unsigned char *str,unsigned char *index);
-void getAnswer(unsigned char *str,unsigned char *index);
-void calculator(unsigned char *str,unsigned char *index,unsigned char press);
-bh_delStr(unsigned char *str,unsigned char *index);
-void binToHEX(unsigned char *str,unsigned char *index,unsigned char press);
+void addStr(unsigned char *str,char *index,unsigned char press);
+void delStr(unsigned char *str,char *index);
+void getAnswer(unsigned char *str,char *index);
+void calculator(unsigned char *str,char *index,unsigned char press);
+bh_delStr(unsigned char *str,char *index);
+void binToHEX(unsigned char *str,char *index,unsigned char press);
 #endif

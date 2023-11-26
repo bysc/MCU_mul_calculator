@@ -7,7 +7,7 @@ void main()
 {
 	unsigned char press;//按键值读取
 	unsigned char str[17];
-	unsigned char index=-1;
+  char index=-1;
 	bit mode=0;//0为calculator，1为2转16进制
 /*===================以上通用===========================*/	
 	welcome();
