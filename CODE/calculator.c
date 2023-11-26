@@ -1,53 +1,46 @@
 #include "system.h"
 #include <stdio.h>
-#incude <string.h>
 typedef unsigned char u8;
 typedef unsigned int u16;
+bit end_mark=0;//calculator专用
 void main()
 {
 	unsigned char press;//按键值读取
-	unsigned char str[16];
-	float x1,x2,y;
-	unsigned char i,j;
-	bit point1;
-	bit point2;
-	unsigned char operation=0;
+	unsigned char str[17];
+  char index=-1;
+	bit mode=0;//0为calculator，1为2转16进制
+/*===================以上通用===========================*/	
 	welcome();
 	lcd_delay(500);
+	clearStr(str,17);
 	while(1)	
 		
 	{
-		switch(press=key_getvalue())
+		press=key_getvalue();
+		if(press==255) continue;
+		//键盘扫描，模式选择,模式优先级比end_mark高
+		else if(press=='#') 
 		{
-			case 255:break;
-			case '.':
-				lcd_init();
-			  x1=0;
-			  x2=0;
-			operation=0;
-			  break;
-			case '=':
-				lcd_writedata('=');
-			  lcd_gotoxy(1,0);
-				switch (operation)
-				{
-					case '+':y=x1+x2;break;
-					case '-':y=x1-x2;break;
-					case '*':y=x1*x2;break;
-					case '/':y=x1/x2;break;
-					default:y=x1;break;
-				}
-				sprintf(str,"%0.5f",y);
-				lcd_printstr(str);
-			break;
-			case '+':operation='+';lcd_writedata('+');break;
-			case '-':operation='-';lcd_writedata('-');break;
-			case '*':operation='*';lcd_writedata('*');break;
-			case '/':operation='/';lcd_writedata('/');break;
-			default:
-				lcd_writedata(press);
-				if(!operation) x1=x1*10+press-'0';
-			  else x2=x2*10+press-'0'; 
+			mode=0;
+			lcd_init();
+			lcd_printstr("calculator");
+			lcd_delay(1000);
+			lcd_init();
+			clearStr(str,17);
+			index=-1;
+			end_mark=0;
 		}
+		else if(press=='$') 
+		{
+			mode=1;
+			lcd_init();
+			lcd_printstr("bin_hex convert");
+			lcd_delay(1000);
+			lcd_init();
+			clearStr(str,17);
+			index=-1;
+		}
+		else if(mode==0) calculator(str,&index,press);
+		else binToHEX(str,&index,press);
 	}
 }
