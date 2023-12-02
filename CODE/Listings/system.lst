@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   SYSTEM                                                                11/26/2023 23:04:21 PAGE 1   
+C51 COMPILER V9.54   SYSTEM                                                                11/29/2023 18:58:07 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE SYSTEM
@@ -62,7 +62,7 @@ line level    source
   52   1        bit point1=0,operation=0,point2=0;
   53   1        unsigned char action=0;
   54   1        unsigned char i;
-C51 COMPILER V9.54   SYSTEM                                                                11/26/2023 23:04:21 PAGE 2   
+C51 COMPILER V9.54   SYSTEM                                                                11/29/2023 18:58:07 PAGE 2   
 
   55   1        float power=1;//∏°µ„º”»®
   56   1        
@@ -126,7 +126,7 @@ line level    source
  114   1          operation=0;
  115   1          action=0;
  116   1      }
-C51 COMPILER V9.54   SYSTEM                                                                11/26/2023 23:04:21 PAGE 3   
+C51 COMPILER V9.54   SYSTEM                                                                11/29/2023 18:58:07 PAGE 3   
 
  117          void calculator(unsigned char *str,unsigned char *index,unsigned char press)
  118          {
@@ -190,7 +190,7 @@ line level    source
  176   2          if(*index==15) 
  177   2          {
  178   3            lcd_init();
-C51 COMPILER V9.54   SYSTEM                                                                11/26/2023 23:04:21 PAGE 4   
+C51 COMPILER V9.54   SYSTEM                                                                11/29/2023 18:58:07 PAGE 4   
 
  179   3            lcd_printstr("space overflower");
  180   3            lcd_delay(1000);

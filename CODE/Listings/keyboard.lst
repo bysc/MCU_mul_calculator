@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   KEYBOARD                                                              11/24/2023 23:53:54 PAGE 1   
+C51 COMPILER V9.54   KEYBOARD                                                              12/02/2023 21:51:44 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE KEYBOARD
@@ -34,15 +34,15 @@ line level    source
   24   4            }
   25   3            case 0xfd:
   26   3            {
-  27   4              while(KEY!=0xfd);return dep_table[1];
+  27   4              while(KEY!=0xff);return dep_table[1];
   28   4            }
   29   3            case 0xfb:
   30   3            {
-  31   4              while(KEY!=0xfb);return dep_table[2];
+  31   4              while(KEY!=0xff);return dep_table[2];
   32   4            }
   33   3            case 0xf7:
   34   3            {
-  35   4              while(KEY!=0xf7);return dep_table[3];
+  35   4              while(KEY!=0xff);return dep_table[3];
   36   4            }
   37   3            default:return 255;
   38   3          }
@@ -62,7 +62,7 @@ line level    source
   52   4          }
   53   3          KEY=0x0f;
   54   3          switch(KEY)//––…®√Ë
-C51 COMPILER V9.54   KEYBOARD                                                              11/24/2023 23:53:54 PAGE 2   
+C51 COMPILER V9.54   KEYBOARD                                                              12/02/2023 21:51:44 PAGE 2   
 
   55   3          {
   56   4            case 0x0e:sum=sum;break;
