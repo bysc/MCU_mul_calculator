@@ -1,3 +1,7 @@
+/*简单说明lcd显示流程：
+计算器：dc---->字符串--->提示字符串---->字符串
+        =---->字符串---->结果
+进制转换器：dc--->仅处理字符串，不显示字符串，显示提示符--->紧接着计算十六进制代码并刷新显示*/
 #include "system.h"
 void welcome()
 {
@@ -5,7 +9,7 @@ void welcome()
 	lcd_printstr("Welcome!");
 	lcd_gotoxy(1,0);
 	lcd_printstr("bysc");
-	lcd_delay(500);
+	lcd_delay(1000);
 	lcd_writecmd(0x01);
 }
 void clearStr(unsigned char *str,unsigned char len)
@@ -20,7 +24,7 @@ void addStr(unsigned char *str,unsigned char *index,unsigned char press)
 		lcd_init();
 		lcd_printstr("space overflower");
 		lcd_delay(1000);
-		lcd_init();
+		lcd_writecmd(0x01);
 		lcd_printstr(str);
 	}
 	else
@@ -43,7 +47,7 @@ void delStr(unsigned char *str,unsigned char *index)
 		str[*index]=0;
 		(*index)--;
 	}
-	lcd_init();
+	lcd_writecmd(0x01);
 	lcd_printstr(str);
 }
 void getAnswer(unsigned char *str,unsigned char *index)
@@ -58,7 +62,7 @@ void getAnswer(unsigned char *str,unsigned char *index)
 	{
 			lcd_printstr("nothing to print");
 			lcd_delay(1000);
-			lcd_init();
+			lcd_writecmd(0x01);
 			return;			
 	}
 	for(i=0;i<=(*index);i++)
@@ -118,7 +122,7 @@ void calculator(unsigned char *str,unsigned char *index,unsigned char press)
 {
 	  if(end_mark)
 		{
-			lcd_init();
+			lcd_writecmd(0x01);
 			end_mark=0;
 		}
 		else if(press=='=') 
@@ -129,7 +133,7 @@ void calculator(unsigned char *str,unsigned char *index,unsigned char press)
 		else if(press=='d') delStr(str,index);
 		else if(press=='c') 
 		{
-			lcd_init();
+			lcd_writecmd(0x01);
 			clearStr(str,17);
 			(*index)=-1;
 		}
@@ -158,14 +162,14 @@ void binToHEX(unsigned char *str,unsigned char *index,unsigned char press)
 	if(press=='d') bh_delStr(str,index);//仅删除，不做其他操作
 	else if(press=='c')
 	{
-		lcd_init();
+		lcd_writecmd(0x01);
 		clearStr(str,17);
 		(*index)=-1;
 		return;
 	}
 	else if(press!='0'&&press!='1')
 	{
-		lcd_init();
+		lcd_writecmd(0x01);
 		lcd_printstr("invalid input");
 		lcd_delay(500);
 	}
@@ -175,7 +179,7 @@ void binToHEX(unsigned char *str,unsigned char *index,unsigned char press)
 	{
 		if(*index==15) 
 	  {
-		  lcd_init();
+		  lcd_writecmd(0x01);
 		  lcd_printstr("space overflower");
 		  lcd_delay(1000);
 	  }
@@ -190,7 +194,7 @@ void binToHEX(unsigned char *str,unsigned char *index,unsigned char press)
 	=========为什么index=-1就会死机================*/
 	if(*index==-1)
 	{
-		lcd_init();
+		lcd_writecmd(0x01);
 		return;
 	}
 	/*===========================================*/
@@ -218,7 +222,7 @@ void binToHEX(unsigned char *str,unsigned char *index,unsigned char press)
 		else if(HE[i]>=10) HE[i]=HE[i]-10+'A';
 		HE[4]='H';
 	}
-	lcd_init();
+	lcd_writecmd(0x01);
 	lcd_printstr(str);
 	lcd_gotoxy(1,0);
 	lcd_printstr(HE);

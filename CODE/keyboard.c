@@ -1,6 +1,6 @@
 #include "keyboard.h"
 unsigned char code key_board_table[16]="123+456-789*0.=/";
-unsigned char dep_table[8]="dc#$%&()";
+unsigned char dep_table[8]="dc#$%&(t";//456保留作用
 void key_delay(unsigned int times)
 {
 	unsigned int i,j;
@@ -20,24 +20,39 @@ unsigned char key_getvalue()
 		{
 			case 0xfe:
 			{
-				while(KEY!=0xff);return dep_table[0];
+				while(KEY!=0xff);return dep_table[0];break;
 			}
 			case 0xfd:
 			{
-				while(KEY!=0xff);return dep_table[1];
+				while(KEY!=0xff);return dep_table[1];break;
 			}
 			case 0xfb:
 			{
-				while(KEY!=0xff);return dep_table[2];
+				while(KEY!=0xff);return dep_table[2];break;
 			}
 			case 0xf7:
 			{
-				while(KEY!=0xff);return dep_table[3];
+				while(KEY!=0xff);return dep_table[3];break;
 			}
-			default:return 255;
+			case 0xef:
+			{
+				while(KEY!=0xff);return dep_table[4];break;
+			}	
+			case 0xdf:
+			{
+				while(KEY!=0xff);return dep_table[5];break;
+			}	
+			case 0xbf:
+			{
+				while(KEY!=0xff);return dep_table[6];break;
+			}				
+			case 0x7f:
+			{
+				while(KEY!=0xff);return dep_table[7];break;
+			}		
+			default:return 255;break;
 		}
 	}
-
 	KEY=0xf0;//列4行4
 	if(KEY!=0xf0){
 		key_delay(20);

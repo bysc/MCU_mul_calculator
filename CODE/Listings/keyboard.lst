@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   KEYBOARD                                                              12/02/2023 21:51:44 PAGE 1   
+C51 COMPILER V9.54   KEYBOARD                                                              12/04/2023 22:46:38 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE KEYBOARD
@@ -10,7 +10,7 @@ line level    source
 
    1          #include "keyboard.h"
    2          unsigned char code key_board_table[16]="123+456-789*0.=/";
-   3          unsigned char dep_table[8]="dc#$%&()";
+   3          unsigned char dep_table[8]="dc#$%&(t";//456保留作用
    4          void key_delay(unsigned int times)
    5          {
    6   1        unsigned int i,j;
@@ -30,56 +30,71 @@ line level    source
   20   2          {
   21   3            case 0xfe:
   22   3            {
-  23   4              while(KEY!=0xff);return dep_table[0];
+  23   4              while(KEY!=0xff);return dep_table[0];break;
   24   4            }
   25   3            case 0xfd:
   26   3            {
-  27   4              while(KEY!=0xff);return dep_table[1];
+  27   4              while(KEY!=0xff);return dep_table[1];break;
   28   4            }
   29   3            case 0xfb:
   30   3            {
-  31   4              while(KEY!=0xff);return dep_table[2];
+  31   4              while(KEY!=0xff);return dep_table[2];break;
   32   4            }
   33   3            case 0xf7:
   34   3            {
-  35   4              while(KEY!=0xff);return dep_table[3];
+  35   4              while(KEY!=0xff);return dep_table[3];break;
   36   4            }
-  37   3            default:return 255;
-  38   3          }
-  39   2        }
-  40   1      
-  41   1        KEY=0xf0;//列4行4
-  42   1        if(KEY!=0xf0){
-  43   2          key_delay(20);
-  44   2        if(KEY!=0xf0)
-  45   2        {
-  46   3          switch(KEY)//列扫描
-  47   3          {
-  48   4            case 0xe0:sum=1;break;
-  49   4            case 0xd0:sum=2;break;
-  50   4            case 0xb0:sum=3;break;
-  51   4            case 0x70:sum=4;break;
-  52   4          }
-  53   3          KEY=0x0f;
-  54   3          switch(KEY)//行扫描
-C51 COMPILER V9.54   KEYBOARD                                                              12/02/2023 21:51:44 PAGE 2   
+  37   3            case 0xef:
+  38   3            {
+  39   4              while(KEY!=0xff);return dep_table[4];break;
+  40   4            } 
+  41   3            case 0xdf:
+  42   3            {
+  43   4              while(KEY!=0xff);return dep_table[5];break;
+  44   4            } 
+  45   3            case 0xbf:
+  46   3            {
+  47   4              while(KEY!=0xff);return dep_table[6];break;
+  48   4            }       
+  49   3            case 0x7f:
+  50   3            {
+  51   4              while(KEY!=0xff);return dep_table[7];break;
+  52   4            }   
+  53   3            default:return 255;break;
+  54   3          }
+C51 COMPILER V9.54   KEYBOARD                                                              12/04/2023 22:46:38 PAGE 2   
 
-  55   3          {
-  56   4            case 0x0e:sum=sum;break;
-  57   4            case 0x0d:sum=sum+4;break;
-  58   4            case 0x0b:sum=sum+8;break;
-  59   4            case 0x07:sum=sum+12;break;     
-  60   4          }
-  61   3          while(KEY!=0x0f);
-  62   3          return key_board_table[sum-1];
-  63   3        }}
-  64   1        else return 255;
-  65   1      }
-*** WARNING C291 IN LINE 65 OF keyboard.c: not every exit path returns a value
+  55   2        }
+  56   1        KEY=0xf0;//列4行4
+  57   1        if(KEY!=0xf0){
+  58   2          key_delay(20);
+  59   2        if(KEY!=0xf0)
+  60   2        {
+  61   3          switch(KEY)//列扫描
+  62   3          {
+  63   4            case 0xe0:sum=1;break;
+  64   4            case 0xd0:sum=2;break;
+  65   4            case 0xb0:sum=3;break;
+  66   4            case 0x70:sum=4;break;
+  67   4          }
+  68   3          KEY=0x0f;
+  69   3          switch(KEY)//行扫描
+  70   3          {
+  71   4            case 0x0e:sum=sum;break;
+  72   4            case 0x0d:sum=sum+4;break;
+  73   4            case 0x0b:sum=sum+8;break;
+  74   4            case 0x07:sum=sum+12;break;     
+  75   4          }
+  76   3          while(KEY!=0x0f);
+  77   3          return key_board_table[sum-1];
+  78   3        }}
+  79   1        else return 255;
+  80   1      }
+*** WARNING C291 IN LINE 80 OF keyboard.c: not every exit path returns a value
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    223    ----
+   CODE SIZE        =    271    ----
    CONSTANT SIZE    =     16    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
