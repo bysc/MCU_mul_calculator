@@ -112,17 +112,26 @@ void getAnswer(unsigned char *str,unsigned char *index)
 		sprintf(str,"%.6f",y);
 		lcd_gotoxy(1,0);
 		lcd_printstr(str);
-		(*index)=-1;
+/*		(*index)=-1;
 		point1=0;
 		point2=0;
 		operation=0;
-		action=0;
+		action=0;*/
+	
+	//连续运算版本,保留部分结果信息
+	point1=1;
+	point2=0;
+	operation=0;
+	action=0;
+	(*index)=-1;
+	while(str[*index+1]!=0) (*index)++;
 }
 void calculator(unsigned char *str,unsigned char *index,unsigned char press)
 {
 	  if(end_mark)
 		{
 			lcd_writecmd(0x01);
+			lcd_printstr(str);
 			end_mark=0;
 		}
 		else if(press=='=') 
@@ -143,7 +152,7 @@ bh_delStr(unsigned char *str,unsigned char *index)
 {
 	if((*index)==-1)
 	{
-		lcd_init();
+		lcd_writecmd(0x01);
 		lcd_printstr("space null");
 		lcd_delay(1000);
 	}
@@ -226,4 +235,67 @@ void binToHEX(unsigned char *str,unsigned char *index,unsigned char press)
 	lcd_printstr(str);
 	lcd_gotoxy(1,0);
 	lcd_printstr(HE);
+}
+/*========================================================
+======================================================
+==============dec to bin========================
+======================================================
+======================================================*/
+void decToBin(unsigned char *str,char *index,unsigned char press)
+{
+	unsigned int BI=0x0000;//存储16位二进制代码
+	unsigned char bin[17]={0};
+	bit start=0;
+	char i=0,j=0;
+	if(press=='d') bh_delStr(str,index);//仅删除，不做其他操作
+	else if(press=='c')
+	{
+		lcd_writecmd(0x01);
+		clearStr(str,17);
+		(*index)=-1;
+		return;
+	}
+	else if(press<'0'|| press>'9')
+	{
+		lcd_writecmd(0x01);
+		lcd_printstr("invalid input");
+		lcd_delay(500);
+	}
+	else 
+	{
+		if(*index==15) 
+	  {
+		  lcd_writecmd(0x01);
+		  lcd_printstr("space overflower");
+		  lcd_delay(1000);
+	  }
+	  else
+	  {
+		  (*index)++;
+		  str[*index]=press;
+	  }
+	}
+		if(*index==-1)
+	{
+		lcd_writecmd(0x01);
+		return;
+	}
+	for(i=0;i<=(*index);i++)
+	{
+		BI=BI*10+str[i]-'0';
+	}
+	for(i=0,j=0;i<16;i++)
+	{
+		if(start==0) start=((BI>>(15-i))&1);	
+		if(start==1)
+		{
+			bin[j]=((BI>>(15-i))&1)+'0';
+			j++;
+		}
+	}
+	bin[j]=0;
+	lcd_writecmd(0x01);
+	lcd_printstr(str);
+	lcd_gotoxy(1,0);
+	lcd_printstr(bin);
 }

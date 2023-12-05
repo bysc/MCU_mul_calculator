@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   SYSTEM                                                                12/04/2023 22:25:51 PAGE 1   
+C51 COMPILER V9.54   SYSTEM                                                                12/05/2023 23:02:37 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE SYSTEM
@@ -62,7 +62,7 @@ line level    source
   52   1      }
   53          void getAnswer(unsigned char *str,unsigned char *index)
   54          {
-C51 COMPILER V9.54   SYSTEM                                                                12/04/2023 22:25:51 PAGE 2   
+C51 COMPILER V9.54   SYSTEM                                                                12/05/2023 23:02:37 PAGE 2   
 
   55   1        float x1=0,x2=0,y=0;
   56   1        bit point1=0,operation=0,point2=0;
@@ -124,138 +124,212 @@ line level    source
  112   1          sprintf(str,"%.6f",y);
  113   1          lcd_gotoxy(1,0);
  114   1          lcd_printstr(str);
- 115   1          (*index)=-1;
+ 115   1      /*    (*index)=-1;
  116   1          point1=0;
-C51 COMPILER V9.54   SYSTEM                                                                12/04/2023 22:25:51 PAGE 3   
+C51 COMPILER V9.54   SYSTEM                                                                12/05/2023 23:02:37 PAGE 3   
 
  117   1          point2=0;
  118   1          operation=0;
- 119   1          action=0;
- 120   1      }
- 121          void calculator(unsigned char *str,unsigned char *index,unsigned char press)
- 122          {
- 123   1          if(end_mark)
- 124   1          {
- 125   2            lcd_writecmd(0x01);
- 126   2            end_mark=0;
- 127   2          }
- 128   1          else if(press=='=') 
- 129   1          {
- 130   2            getAnswer(str,index);
- 131   2            end_mark=1;//结束后按任意键结束运算并初始化
- 132   2          }
- 133   1          else if(press=='d') delStr(str,index);
- 134   1          else if(press=='c') 
- 135   1          {
- 136   2            lcd_writecmd(0x01);
- 137   2            clearStr(str,17);
- 138   2            (*index)=-1;
- 139   2          }
- 140   1          else addStr(str,index,press);
- 141   1      }
- 142          bh_delStr(unsigned char *str,unsigned char *index)
- 143          {
- 144   1        if((*index)==-1)
- 145   1        {
- 146   2          lcd_init();
- 147   2          lcd_printstr("space null");
- 148   2          lcd_delay(1000);
- 149   2        }
- 150   1        else
- 151   1        {
- 152   2          str[*index]=0;//区分字符0和数字0
- 153   2          (*index)--;
- 154   2        } 
- 155   1      }
- 156          //二进制到十六进制动态显示
- 157          void binToHEX(unsigned char *str,unsigned char *index,unsigned char press)
- 158          {
- 159   1        unsigned int BI=0x0000;//用于存储16位二进制数
- 160   1        unsigned char HE[6]={0};//用于存储4位十六进制数，后缀H
- 161   1        char i,j,tmp;
- 162   1        if(press=='d') bh_delStr(str,index);//仅删除，不做其他操作
- 163   1        else if(press=='c')
- 164   1        {
- 165   2          lcd_writecmd(0x01);
- 166   2          clearStr(str,17);
- 167   2          (*index)=-1;
- 168   2          return;
- 169   2        }
- 170   1        else if(press!='0'&&press!='1')
- 171   1        {
- 172   2          lcd_writecmd(0x01);
- 173   2          lcd_printstr("invalid input");
- 174   2          lcd_delay(500);
- 175   2        }
- 176   1        
- 177   1        //add str
- 178   1        else 
-C51 COMPILER V9.54   SYSTEM                                                                12/04/2023 22:25:51 PAGE 4   
+ 119   1          action=0;*/
+ 120   1        
+ 121   1        //连续运算版本,保留部分结果信息
+ 122   1        point1=1;
+ 123   1        point2=0;
+ 124   1        operation=0;
+ 125   1        action=0;
+ 126   1        (*index)=-1;
+ 127   1        while(str[*index+1]!=0) (*index)++;
+ 128   1      }
+ 129          void calculator(unsigned char *str,unsigned char *index,unsigned char press)
+ 130          {
+ 131   1          if(end_mark)
+ 132   1          {
+ 133   2            lcd_writecmd(0x01);
+ 134   2            lcd_printstr(str);
+ 135   2            end_mark=0;
+ 136   2          }
+ 137   1          else if(press=='=') 
+ 138   1          {
+ 139   2            getAnswer(str,index);
+ 140   2            end_mark=1;//结束后按任意键结束运算并初始化
+ 141   2          }
+ 142   1          else if(press=='d') delStr(str,index);
+ 143   1          else if(press=='c') 
+ 144   1          {
+ 145   2            lcd_writecmd(0x01);
+ 146   2            clearStr(str,17);
+ 147   2            (*index)=-1;
+ 148   2          }
+ 149   1          else addStr(str,index,press);
+ 150   1      }
+ 151          bh_delStr(unsigned char *str,unsigned char *index)
+ 152          {
+ 153   1        if((*index)==-1)
+ 154   1        {
+ 155   2          lcd_writecmd(0x01);
+ 156   2          lcd_printstr("space null");
+ 157   2          lcd_delay(1000);
+ 158   2        }
+ 159   1        else
+ 160   1        {
+ 161   2          str[*index]=0;//区分字符0和数字0
+ 162   2          (*index)--;
+ 163   2        } 
+ 164   1      }
+ 165          //二进制到十六进制动态显示
+ 166          void binToHEX(unsigned char *str,unsigned char *index,unsigned char press)
+ 167          {
+ 168   1        unsigned int BI=0x0000;//用于存储16位二进制数
+ 169   1        unsigned char HE[6]={0};//用于存储4位十六进制数，后缀H
+ 170   1        char i,j,tmp;
+ 171   1        if(press=='d') bh_delStr(str,index);//仅删除，不做其他操作
+ 172   1        else if(press=='c')
+ 173   1        {
+ 174   2          lcd_writecmd(0x01);
+ 175   2          clearStr(str,17);
+ 176   2          (*index)=-1;
+ 177   2          return;
+ 178   2        }
+C51 COMPILER V9.54   SYSTEM                                                                12/05/2023 23:02:37 PAGE 4   
 
- 179   1        {
- 180   2          if(*index==15) 
- 181   2          {
- 182   3            lcd_writecmd(0x01);
- 183   3            lcd_printstr("space overflower");
- 184   3            lcd_delay(1000);
- 185   3          }
- 186   2          else
- 187   2          {
- 188   3            (*index)++;
- 189   3            str[*index]=press;
- 190   3          }
- 191   2        }
- 192   1      /*=============================================
- 193   1        =============不理解=========================
- 194   1        =========为什么index=-1就会死机================*/
- 195   1        if(*index==-1)
- 196   1        {
- 197   2          lcd_writecmd(0x01);
- 198   2          return;
- 199   2        }
- 200   1        /*===========================================*/
- 201   1        for(i=0;i<=(*index);i++)
- 202   1        {
- 203   2          BI=(BI<<1)+str[i]-'0';
- 204   2        }//BI更新
- 205   1          //16->4拆分计算
- 206   1      /* 
- 207   1      ----<-------------------<-------------------------<---------press左移放入BI
- 208   1        ___________ tmp_____________tmp_________tmp________tmp__
- 209   1        BI|15 14  13  12||||11  10  9 8||||7  6 5 4||||3  2 1 0|||
- 210   1          --------------||||-----------||||--------||||--------|||
- 211   1        i |     HE[0]   ||||    HE[1]  ||||   HE[2]||||  HE[3] |||
- 212   1          --------------||||-----------||||--------||||--------|||
- 213   1          */
- 214   1        for(i=0;i<4;i++)
- 215   1        {
- 216   2          tmp=(3-i)*4;//tmp指向
- 217   2          for(j=tmp;j<tmp+4;j++)
- 218   2          {
- 219   3            HE[i]+=((BI>>j)&1)<<(j-tmp);
- 220   3          }
- 221   2          if(HE[i]>=0&&HE[i]<=9) HE[i]+='0';
- 222   2          else if(HE[i]>=10) HE[i]=HE[i]-10+'A';
- 223   2          HE[4]='H';
- 224   2        }
- 225   1        lcd_writecmd(0x01);
- 226   1        lcd_printstr(str);
- 227   1        lcd_gotoxy(1,0);
- 228   1        lcd_printstr(HE);
- 229   1      }
-*** WARNING C290 IN LINE 155 OF system.c: missing return value
+ 179   1        else if(press!='0'&&press!='1')
+ 180   1        {
+ 181   2          lcd_writecmd(0x01);
+ 182   2          lcd_printstr("invalid input");
+ 183   2          lcd_delay(500);
+ 184   2        }
+ 185   1        
+ 186   1        //add str
+ 187   1        else 
+ 188   1        {
+ 189   2          if(*index==15) 
+ 190   2          {
+ 191   3            lcd_writecmd(0x01);
+ 192   3            lcd_printstr("space overflower");
+ 193   3            lcd_delay(1000);
+ 194   3          }
+ 195   2          else
+ 196   2          {
+ 197   3            (*index)++;
+ 198   3            str[*index]=press;
+ 199   3          }
+ 200   2        }
+ 201   1      /*=============================================
+ 202   1        =============不理解=========================
+ 203   1        =========为什么index=-1就会死机================*/
+ 204   1        if(*index==-1)
+ 205   1        {
+ 206   2          lcd_writecmd(0x01);
+ 207   2          return;
+ 208   2        }
+ 209   1        /*===========================================*/
+ 210   1        for(i=0;i<=(*index);i++)
+ 211   1        {
+ 212   2          BI=(BI<<1)+str[i]-'0';
+ 213   2        }//BI更新
+ 214   1          //16->4拆分计算
+ 215   1      /* 
+ 216   1      ----<-------------------<-------------------------<---------press左移放入BI
+ 217   1        ___________ tmp_____________tmp_________tmp________tmp__
+ 218   1        BI|15 14  13  12||||11  10  9 8||||7  6 5 4||||3  2 1 0|||
+ 219   1          --------------||||-----------||||--------||||--------|||
+ 220   1        i |     HE[0]   ||||    HE[1]  ||||   HE[2]||||  HE[3] |||
+ 221   1          --------------||||-----------||||--------||||--------|||
+ 222   1          */
+ 223   1        for(i=0;i<4;i++)
+ 224   1        {
+ 225   2          tmp=(3-i)*4;//tmp指向
+ 226   2          for(j=tmp;j<tmp+4;j++)
+ 227   2          {
+ 228   3            HE[i]+=((BI>>j)&1)<<(j-tmp);
+ 229   3          }
+ 230   2          if(HE[i]>=0&&HE[i]<=9) HE[i]+='0';
+ 231   2          else if(HE[i]>=10) HE[i]=HE[i]-10+'A';
+ 232   2          HE[4]='H';
+ 233   2        }
+ 234   1        lcd_writecmd(0x01);
+ 235   1        lcd_printstr(str);
+ 236   1        lcd_gotoxy(1,0);
+ 237   1        lcd_printstr(HE);
+ 238   1      }
+ 239          /*========================================================
+ 240          ======================================================
+C51 COMPILER V9.54   SYSTEM                                                                12/05/2023 23:02:37 PAGE 5   
+
+ 241          ==============dec to bin========================
+ 242          ======================================================
+ 243          ======================================================*/
+ 244          void decToBin(unsigned char *str,char *index,unsigned char press)
+ 245          {
+ 246   1        unsigned int BI=0x0000;//存储16位二进制代码
+ 247   1        unsigned char bin[17]={0};
+ 248   1        bit start=0;
+ 249   1        char i=0,j=0;
+ 250   1        if(press=='d') bh_delStr(str,index);//仅删除，不做其他操作
+ 251   1        else if(press=='c')
+ 252   1        {
+ 253   2          lcd_writecmd(0x01);
+ 254   2          clearStr(str,17);
+ 255   2          (*index)=-1;
+ 256   2          return;
+ 257   2        }
+ 258   1        else if(press<'0'|| press>'9')
+ 259   1        {
+ 260   2          lcd_writecmd(0x01);
+ 261   2          lcd_printstr("invalid input");
+ 262   2          lcd_delay(500);
+ 263   2        }
+ 264   1        else 
+ 265   1        {
+ 266   2          if(*index==15) 
+ 267   2          {
+ 268   3            lcd_writecmd(0x01);
+ 269   3            lcd_printstr("space overflower");
+ 270   3            lcd_delay(1000);
+ 271   3          }
+ 272   2          else
+ 273   2          {
+ 274   3            (*index)++;
+ 275   3            str[*index]=press;
+ 276   3          }
+ 277   2        }
+ 278   1          if(*index==-1)
+ 279   1        {
+ 280   2          lcd_writecmd(0x01);
+ 281   2          return;
+ 282   2        }
+ 283   1        for(i=0;i<=(*index);i++)
+ 284   1        {
+ 285   2          BI=BI*10+str[i]-'0';
+ 286   2        }
+ 287   1        for(i=0,j=0;i<16;i++)
+ 288   1        {
+ 289   2          if(start==0) start=((BI>>(15-i))&1);  
+ 290   2          if(start==1)
+ 291   2          {
+ 292   3            bin[j]=((BI>>(15-i))&1)+'0';
+ 293   3            j++;
+ 294   3          }
+ 295   2        }
+ 296   1        bin[j]=0;
+ 297   1        lcd_writecmd(0x01);
+ 298   1        lcd_printstr(str);
+ 299   1        lcd_gotoxy(1,0);
+ 300   1        lcd_printstr(bin);
+ 301   1      }
+*** WARNING C290 IN LINE 164 OF system.c: missing return value
+C51 COMPILER V9.54   SYSTEM                                                                12/05/2023 23:02:37 PAGE 6   
+
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   1664    ----
-   CONSTANT SIZE    =     96    ----
+   CODE SIZE        =   2118    ----
+   CONSTANT SIZE    =    113    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----      69
+   DATA SIZE        =   ----      97
    IDATA SIZE       =   ----    ----
-   BIT SIZE         =   ----       3
-C51 COMPILER V9.54   SYSTEM                                                                12/04/2023 22:25:51 PAGE 5   
-
+   BIT SIZE         =   ----       4
 END OF MODULE INFORMATION.
 
 

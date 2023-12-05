@@ -8,7 +8,7 @@ void main()
 	unsigned char press;//按键值读取
 	unsigned char str[17];
   char index=-1;
-	bit mode=0;//0为calculator，1为2转16进制
+	unsigned char mode=0;//0为calculator，1为2转16进制，2为10转2
 	bit turn=0;//0表示lcd关机，1表示开机
 /*===================以上通用===========================*/	
 	clearStr(str,17);
@@ -58,7 +58,18 @@ void main()
 			clearStr(str,17);
 			index=-1;
 		}
+		else if(press=='%')
+		{
+			mode=2;
+			lcd_init();
+			lcd_printstr("dec_bin convert");
+			lcd_delay(1000);
+			lcd_writecmd(0x01);
+			clearStr(str,17);
+			index=-1;
+		}
 		else if(mode==0) calculator(str,&index,press);
-		else binToHEX(str,&index,press);
+		else if(mode==1) binToHEX(str,&index,press);
+		else decToBin(str,&index,press);
 	}
 }

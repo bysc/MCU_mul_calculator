@@ -14,4 +14,5 @@ void getAnswer(unsigned char *str,char *index);
 void calculator(unsigned char *str,char *index,unsigned char press);
 bh_delStr(unsigned char *str,char *index);
 void binToHEX(unsigned char *str,char *index,unsigned char press);
+void decToBin(unsigned char *str,char *index,unsigned char press);
 #endif

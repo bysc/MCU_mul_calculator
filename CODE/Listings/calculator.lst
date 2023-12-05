@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   CALCULATOR                                                            12/04/2023 22:41:28 PAGE 1   
+C51 COMPILER V9.54   CALCULATOR                                                            12/05/2023 22:09:29 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE CALCULATOR
@@ -18,7 +18,7 @@ line level    source
    8   1        unsigned char press;//按键值读取
    9   1        unsigned char str[17];
   10   1        char index=-1;
-  11   1        bit mode=0;//0为calculator，1为2转16进制
+  11   1        unsigned char mode=0;//0为calculator，1为2转16进制，2为10转2
   12   1        bit turn=0;//0表示lcd关机，1表示开机
   13   1      /*===================以上通用===========================*/  
   14   1        clearStr(str,17);
@@ -62,7 +62,7 @@ line level    source
   52   2          {
   53   3            mode=1;
   54   3            lcd_init();
-C51 COMPILER V9.54   CALCULATOR                                                            12/04/2023 22:41:28 PAGE 2   
+C51 COMPILER V9.54   CALCULATOR                                                            12/05/2023 22:09:29 PAGE 2   
 
   55   3            lcd_printstr("bin_hex convert");
   56   3            lcd_delay(1000);
@@ -70,20 +70,31 @@ line level    source
   58   3            clearStr(str,17);
   59   3            index=-1;
   60   3          }
-  61   2          else if(mode==0) calculator(str,&index,press);
-  62   2          else binToHEX(str,&index,press);
-  63   2        }
-  64   1      }
+  61   2          else if(press=='%')
+  62   2          {
+  63   3            mode=2;
+  64   3            lcd_init();
+  65   3            lcd_printstr("dec_bin convert");
+  66   3            lcd_delay(1000);
+  67   3            lcd_writecmd(0x01);
+  68   3            clearStr(str,17);
+  69   3            index=-1;
+  70   3          }
+  71   2          else if(mode==0) calculator(str,&index,press);
+  72   2          else if(mode==1) binToHEX(str,&index,press);
+  73   2          else decToBin(str,&index,press);
+  74   2        }
+  75   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    231    ----
-   CONSTANT SIZE    =     35    ----
+   CODE SIZE        =    300    ----
+   CONSTANT SIZE    =     51    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----      19
+   DATA SIZE        =   ----      20
    IDATA SIZE       =   ----    ----
-   BIT SIZE         =      1       2
+   BIT SIZE         =      1       1
 END OF MODULE INFORMATION.
 
 

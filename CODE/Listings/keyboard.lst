@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   KEYBOARD                                                              12/04/2023 22:46:38 PAGE 1   
+C51 COMPILER V9.54   KEYBOARD                                                              12/05/2023 00:25:34 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE KEYBOARD
@@ -62,7 +62,7 @@ line level    source
   52   4            }   
   53   3            default:return 255;break;
   54   3          }
-C51 COMPILER V9.54   KEYBOARD                                                              12/04/2023 22:46:38 PAGE 2   
+C51 COMPILER V9.54   KEYBOARD                                                              12/05/2023 00:25:34 PAGE 2   
 
   55   2        }
   56   1        KEY=0xf0;//ÁÐ4ÐÐ4
