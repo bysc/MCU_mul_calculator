@@ -134,7 +134,7 @@ void calculator(unsigned char *str,unsigned char *index,unsigned char press)
 			lcd_printstr(str);
 			end_mark=0;
 		}
-		else if(press=='=') 
+		if(press=='=') 
 		{
 			getAnswer(str,index);
 			end_mark=1;//结束后按任意键结束运算并初始化

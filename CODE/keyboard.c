@@ -58,7 +58,7 @@ unsigned char key_getvalue()
 		key_delay(20);
 	if(KEY!=0xf0)
 	{
-		switch(KEY)//列扫描
+		switch(KEY)//列拉高，列扫描
 		{
 			case 0xe0:sum=1;break;
 			case 0xd0:sum=2;break;
