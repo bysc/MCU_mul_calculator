@@ -1,4 +1,4 @@
-C51 COMPILER V9.54   SYSTEM                                                                12/05/2023 23:02:37 PAGE 1   
+C51 COMPILER V9.54   SYSTEM                                                                04/18/2024 19:04:53 PAGE 1   
 
 
 C51 COMPILER V9.54, COMPILATION OF MODULE SYSTEM
@@ -62,7 +62,7 @@ line level    source
   52   1      }
   53          void getAnswer(unsigned char *str,unsigned char *index)
   54          {
-C51 COMPILER V9.54   SYSTEM                                                                12/05/2023 23:02:37 PAGE 2   
+C51 COMPILER V9.54   SYSTEM                                                                04/18/2024 19:04:53 PAGE 2   
 
   55   1        float x1=0,x2=0,y=0;
   56   1        bit point1=0,operation=0,point2=0;
@@ -126,7 +126,7 @@ line level    source
  114   1          lcd_printstr(str);
  115   1      /*    (*index)=-1;
  116   1          point1=0;
-C51 COMPILER V9.54   SYSTEM                                                                12/05/2023 23:02:37 PAGE 3   
+C51 COMPILER V9.54   SYSTEM                                                                04/18/2024 19:04:53 PAGE 3   
 
  117   1          point2=0;
  118   1          operation=0;
@@ -148,7 +148,7 @@ line level    source
  134   2            lcd_printstr(str);
  135   2            end_mark=0;
  136   2          }
- 137   1          else if(press=='=') 
+ 137   1          if(press=='=') 
  138   1          {
  139   2            getAnswer(str,index);
  140   2            end_mark=1;//结束后按任意键结束运算并初始化
@@ -190,7 +190,7 @@ line level    source
  176   2          (*index)=-1;
  177   2          return;
  178   2        }
-C51 COMPILER V9.54   SYSTEM                                                                12/05/2023 23:02:37 PAGE 4   
+C51 COMPILER V9.54   SYSTEM                                                                04/18/2024 19:04:53 PAGE 4   
 
  179   1        else if(press!='0'&&press!='1')
  180   1        {
@@ -254,7 +254,7 @@ line level    source
  238   1      }
  239          /*========================================================
  240          ======================================================
-C51 COMPILER V9.54   SYSTEM                                                                12/05/2023 23:02:37 PAGE 5   
+C51 COMPILER V9.54   SYSTEM                                                                04/18/2024 19:04:53 PAGE 5   
 
  241          ==============dec to bin========================
  242          ======================================================
@@ -318,12 +318,12 @@ line level    source
  300   1        lcd_printstr(bin);
  301   1      }
 *** WARNING C290 IN LINE 164 OF system.c: missing return value
-C51 COMPILER V9.54   SYSTEM                                                                12/05/2023 23:02:37 PAGE 6   
+C51 COMPILER V9.54   SYSTEM                                                                04/18/2024 19:04:53 PAGE 6   
 
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =   2118    ----
+   CODE SIZE        =   2117    ----
    CONSTANT SIZE    =    113    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
